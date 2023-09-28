@@ -1,12 +1,10 @@
-# react-native-passkey
-
-[![Build](https://img.shields.io/github/actions/workflow/status/mTRx0/react-native-passkey/main.yml?branch=stable)](https://img.shields.io/github/workflow/status/mTRx0/react-native-passkey/Build) [![Version](https://img.shields.io/npm/v/react-native-passkey)](https://img.shields.io/npm/v/react-native-passkey) [![License](https://img.shields.io/npm/l/react-native-passkey)](https://img.shields.io/npm/l/react-native-passkey)
+# @palette/passkey
 
 Native Passkeys on iOS 15.0+ and Android API 28+ using React Native.
 
 > Please note that Android support is still in alpha. ([More info](https://developer.android.com/jetpack/androidx/releases/credentials))
 >
-> Progress is being tracked [here](https://github.com/Palette-Labs/passkey/issues/2).
+> Progress is being tracked [here](https://github.com/Palette-Labs/passkey/issues/).
 
 ## Installation
 
@@ -15,13 +13,13 @@ Native Passkeys on iOS 15.0+ and Android API 28+ using React Native.
 For the javascript part of the installation you need to run
 
 ```sh
-npm install react-native-passkey
+npm install @palette/passkey
 ```
 
 or
 
 ```sh
-yarn add react-native-passkey
+yarn add @palette/passkey
 ```
 
 #### Native
@@ -102,7 +100,7 @@ The Android specific configuration is similar to iOS. If you have already set up
 #### Check if Passkeys are supported
 
 ```ts
-import { Passkey } from 'react-native-passkey';
+import { Passkey } from '@palette/passkey';
 
 // Use this method to check if passkeys are supported on the device
 
@@ -112,7 +110,7 @@ const isSupported: boolean = Passkey.isSupported();
 #### Creating a new Passkey
 
 ```ts
-import { Passkey, PasskeyRegistrationResult } from 'react-native-passkey';
+import { Passkey, PasskeyRegistrationResult } from '@palette/passkey';
 
 // Retrieve a valid FIDO2 attestation request from your server
 // The challenge inside the request needs to be a base64 encoded string
@@ -133,7 +131,7 @@ try {
 #### Authenticating with existing Passkey
 
 ```ts
-import { Passkey, PasskeyAuthenticationResult } from 'react-native-passkey';
+import { Passkey, PasskeyAuthenticationResult } from '@palette/passkey';
 
 // Retrieve a valid FIDO2 assertion request from your server 
 // The challenge inside the request needs to be a base64 encoded string

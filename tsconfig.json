@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-passkey": ["./src/index"]
+      "@palette/passkey": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
