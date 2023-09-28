@@ -4,7 +4,7 @@ Native Passkeys on iOS 15.0+ and Android API 28+ using React Native.
 
 > Please note that Android support is still in alpha. ([More info](https://developer.android.com/jetpack/androidx/releases/credentials))
 >
-> Progress is being tracked [here](https://github.com/Palette-Labs/passkey/issues/).
+> Progress is being tracked [here](https://github.com/Palette-Labs-Inc/passkey/issues/).
 
 ## Installation
 

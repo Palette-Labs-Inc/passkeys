@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.authors      = package["author"]
 
   s.platforms    = { :ios => "12.4" }
-  s.source       = { :git => "https://github.com/mTRx0/react-native-passkey.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/Palette-Labs-Inc/passkeys.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
