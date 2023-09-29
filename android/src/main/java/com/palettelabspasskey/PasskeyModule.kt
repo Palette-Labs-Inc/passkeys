@@ -71,10 +71,10 @@ class PasskeyModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
   @ReactMethod
   fun authenticate(requestJson: String, promise: Promise) {
       val credentialManager = CredentialManager.create(reactApplicationContext.applicationContext)
+
       val getCredentialRequest =
         GetCredentialRequest(listOf(GetPublicKeyCredentialOption(requestJson)))
 
-      
       mainScope.launch {
         try {
           val result =
