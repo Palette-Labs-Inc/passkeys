@@ -1,4 +1,4 @@
-package com.reactnativepasskey
+package com.palettelabspasskey
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -74,6 +74,7 @@ class PasskeyModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
       val getCredentialRequest =
         GetCredentialRequest(listOf(GetPublicKeyCredentialOption(requestJson)))
 
+      
       mainScope.launch {
         try {
           val result =

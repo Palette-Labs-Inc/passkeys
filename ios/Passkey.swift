@@ -8,31 +8,16 @@ class Passkey: NSObject {
   @objc(register:withChallenge:withDisplayName:withUserId:withSecurityKey:withResolver:withRejecter:)
   func register(_ identifier: String, challenge: String, displayName: String, userId: String, securityKey: Bool, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
       
-      print("challenge \(challenge)")
     // Check if Passkeys are supported on this OS version
     if #available(iOS 15.0, *) {
             
-        // Convert challenge and userId to correct type
-        guard let messageBuffer = challenge.data(using: .utf8) else {
-            reject(PassKeyError.invalidChallenge.rawValue, PassKeyError.invalidChallenge.rawValue, nil);
-            return
-        }
-        
-        // computes the SHA-256 hash of a given challenge string
-        let hash = SHA256.hash(data: messageBuffer)
-        let hashBuffer = [UInt8](hash)
-        let hexString = hashBuffer.map { String(format: "%02hhx", $0) }.joined()
-        guard let hexData = hexString.data(using: .utf8) else {
-            reject(PassKeyError.invalidChallenge.rawValue, PassKeyError.invalidChallenge.rawValue, nil);
-            return
-        }
-        let hexBuffer = [UInt8](hexData)
-        let uInt8Array = [UInt8](hexBuffer)
-        let challengeData = Data(uInt8Array)
-            
-        
-        let userIdData: Data = RCTConvert.nsData(userId);
-        let authController: ASAuthorizationController;
+      guard let challengeData: Data = Data(base64Encoded: challenge) else {
+        reject(PassKeyError.invalidChallenge.rawValue, PassKeyError.invalidChallenge.rawValue, nil);
+        return;
+      }
+
+      let userIdData: Data = RCTConvert.nsData(userId);
+      let authController: ASAuthorizationController;
 
       // Check if registration should proceed with a security key
       if (securityKey) {
@@ -71,7 +56,6 @@ class Passkey: NSObject {
           ]
           resolve(authResult);
         } else {
-          print("what the fuck daniel.")
           // If result didn't contain a valid registration result throw an error
           reject(PassKeyError.requestFailed.rawValue, PassKeyError.requestFailed.rawValue, nil);
         }

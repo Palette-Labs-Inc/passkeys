@@ -144,6 +144,6 @@ if (isNewArchitectureEnabled()) {
   react {
     jsRootDir = file("../src/")
     libraryName = "Passkey"
-    codegenJavaPackageName = "com.reactnativepasskey"
+    codegenJavaPackageName = "com.palettelabspasskey"
   }
 }
