@@ -1,4 +1,4 @@
-# @palette/passkey
+# @palette-labs/passkey
 
 Native Passkeys on iOS 15.0+ and Android API 28+ using React Native.
 
@@ -13,13 +13,13 @@ Native Passkeys on iOS 15.0+ and Android API 28+ using React Native.
 For the javascript part of the installation you need to run
 
 ```sh
-npm install @palette/passkey
+npm install @palette-labs/passkey
 ```
 
 or
 
 ```sh
-yarn add @palette/passkey
+yarn add @palette-labs/passkey
 ```
 
 #### Native
@@ -100,7 +100,7 @@ The Android specific configuration is similar to iOS. If you have already set up
 #### Check if Passkeys are supported
 
 ```ts
-import { Passkey } from '@palette/passkey';
+import { Passkey } from '@palette-labs/passkey';
 
 // Use this method to check if passkeys are supported on the device
 
@@ -110,7 +110,7 @@ const isSupported: boolean = Passkey.isSupported();
 #### Creating a new Passkey
 
 ```ts
-import { Passkey, PasskeyRegistrationResult } from '@palette/passkey';
+import { Passkey, PasskeyRegistrationResult } from '@palette-labs/passkey';
 
 // Retrieve a valid FIDO2 attestation request from your server
 // The challenge inside the request needs to be a base64 encoded string
@@ -131,7 +131,7 @@ try {
 #### Authenticating with existing Passkey
 
 ```ts
-import { Passkey, PasskeyAuthenticationResult } from '@palette/passkey';
+import { Passkey, PasskeyAuthenticationResult } from '@palette-labs/passkey';
 
 // Retrieve a valid FIDO2 assertion request from your server 
 // The challenge inside the request needs to be a base64 encoded string

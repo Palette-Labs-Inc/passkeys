@@ -45,7 +45,7 @@ Remember to add tests for your change if possible. Run the unit tests by:
 yarn test
 ```
 
-To edit the Objective-C / Swift files, open `example/ios/PasskeyExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > @palette/passkey`.
+To edit the Objective-C / Swift files, open `example/ios/PasskeyExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > palette-labs-passkey`.
 
 ### Commit message convention
 
