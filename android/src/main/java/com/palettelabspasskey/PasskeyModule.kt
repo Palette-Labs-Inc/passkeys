@@ -1,4 +1,4 @@
-package com.palettelabspasskey
+package com.palettelabs.passkey
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule

@@ -7,7 +7,8 @@
 
 - [ ] Write a how to guide for setting up the turnkey example project.
 - [ ] Regex enforce the challenge length.
-
+- [ ] If user does not have fingerprint setup on Android, then the auth flow for Passkeys just throws a user cancelled error and dismisses the passkeys modal. Need to handle this error.
+- [ ] Android took two attempts on new device to successfully create the passkey.
 
 
 
@@ -29,12 +30,9 @@
 
 
 
-Today: 
-- Registration object to take BufferSource as argument, per [W3c specs](https://www.w3.org/TR/webauthn-2/#dom-publickeycredentialcreationoptions-challenge)
-- 
-
-
-
 Add Passkey links to readme:
 - https://developer.android.com/training/sign-in/passkeys
 - https://support.apple.com/guide/iphone/sign-in-with-passkeys-iphf538ea8d0/ios
+
+
+- No viable credential is available for this user.
