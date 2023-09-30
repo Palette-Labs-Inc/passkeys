@@ -1,9 +1,12 @@
-package com.reactnativepasskey
+package com.palettelabs.passkey
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Promise
+import android.util.Log
 
 import androidx.credentials.CredentialManager
 import androidx.credentials.CreatePublicKeyCredentialRequest
@@ -17,9 +20,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+import java.security.MessageDigest
+import java.nio.charset.StandardCharsets
+import java.util.Base64
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
 class PasskeyModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
   private val mainScope = CoroutineScope(Dispatchers.Default)
 
+  @Serializable
+  data class PublicKeyCredentialRequestOptionsJSON(
+    var challenge: String,
+    val timeout: Long,
+    val rpId: String,
+    val userVerification: String = "preferred"
+  )
   override fun getName(): String {
     return "Passkey"
   }
@@ -68,11 +86,33 @@ class PasskeyModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
     }
   }
 
+  @RequiresApi(Build.VERSION_CODES.O)
   @ReactMethod
   fun authenticate(requestJson: String, promise: Promise) {
-      val credentialManager = CredentialManager.create(reactApplicationContext.applicationContext)
+    Log.e("pk",requestJson)
+
+    val credentialManager = CredentialManager.create(reactApplicationContext.applicationContext)
+    Log.e("hash",requestJson)
+
+    // Deserialize the JSON string into a data class
+    val requestOptions = Json.decodeFromString<PublicKeyCredentialRequestOptionsJSON>(requestJson)
+
+    // Extract the challenge and store it in a val
+    val challenge = requestOptions.challenge
+    Log.e("hash",challenge)
+
+    //perform challenge hash
+    val challengeData = computeSHA256Hash(challenge)
+
+    if (challengeData !== null) {
+      requestOptions.challenge = challengeData
+
+      val encodedRequestJson = Json.encodeToString(requestOptions)
+
+      Log.e("hash",encodedRequestJson)
+
       val getCredentialRequest =
-        GetCredentialRequest(listOf(GetPublicKeyCredentialOption(requestJson)))
+        GetCredentialRequest(listOf(GetPublicKeyCredentialOption(encodedRequestJson)))
 
       mainScope.launch {
         try {
@@ -86,6 +126,9 @@ class PasskeyModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
           promise.reject("Passkey", handleAuthenticationException(e))
         }
       }
+    }else{
+      promise.reject("Passkey","invalid challenge. Unable to hash the provided string.")
+    }
   }
 
   private fun handleAuthenticationException(e: GetCredentialException): String {
@@ -114,6 +157,44 @@ class PasskeyModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
       else -> {
         return e.toString()
       }
+    }
+  }
+
+
+  @RequiresApi(Build.VERSION_CODES.O)
+  private fun computeSHA256Hash(challenge: String): String? {
+    try {
+      // Convert the challenge string to bytes
+      val messageBuffer = challenge.toByteArray(StandardCharsets.UTF_8)
+      Log.d("sha","messageBuffer: $messageBuffer")
+
+      // Compute the SHA-256 hash
+      val digest = MessageDigest.getInstance("SHA-256")
+      val hashBuffer = digest.digest(messageBuffer)
+      Log.d("sha","hashBuffer: $hashBuffer")
+
+      val hexString = hashBuffer.joinToString("") { "%02x".format(it) }
+
+      Log.d("sha","hexString: $hexString")
+
+      val hexData = hexString.toByteArray(StandardCharsets.UTF_8)
+      Log.d("sha","hexData: $hexData")
+
+      val hexBuffer = ByteArray(hexData.size) { hexData[it].toByte() }
+
+      val byteList = hexBuffer.toList()
+      val byteString = byteList.joinToString(", ") { it.toString() }
+      Log.d("sha", "hexBuffer: [$byteString]")
+
+      val encodedString = Base64.getUrlEncoder().encodeToString(hexBuffer)
+
+      Log.d("sha",encodedString)
+      return  encodedString
+
+    } catch (e: Exception) {
+      Log.e("sha","error: ${e.toString()}")
+      // Handle any exceptions (e.g., invalid challenge)
+      return null
     }
   }
 }

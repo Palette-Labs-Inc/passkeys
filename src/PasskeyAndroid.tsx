@@ -60,6 +60,8 @@ export class PasskeyAndroid {
       .replace(/\//g, '_')
       .replace(/\=+$/, '');
 
+    //need to sha256 the challenge here.
+
     return {
       ...request,
       challenge: encodedChallenge,

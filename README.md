@@ -71,6 +71,9 @@ There are iOS specific steps you need to go through in order to configure Passke
 The Android specific configuration is similar to iOS. If you have already set up Digital Asset Links for your application you can skip this step.
 
 #### Associate your app with a domain ([More info](https://developer.android.com/training/sign-in/passkeys#add-support-dal))
+
+- To generate your sha256_cert_fingerprint in Android studio, follow [these steps](https://developer.android.com/studio/publish/app-signing#sign-apk)
+
 - You need to associate a domain with your application. On your webserver set up this route:
 
   ```
@@ -82,7 +85,10 @@ The Android specific configuration is similar to iOS. If you have already set up
 
   ```json
   [{
-    "relation": ["delegate_permission/common.get_login_creds"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
     "target": {
       "namespace": "android_app",
       "package_name": "com.example",

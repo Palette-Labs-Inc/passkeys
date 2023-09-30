@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@palette/passkey": ["./src/index"]
+      "@palette-labs/passkey": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
