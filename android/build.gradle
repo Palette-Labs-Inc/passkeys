@@ -11,6 +11,7 @@ buildscript {
     classpath 'com.android.tools.build:gradle:7.4.2'
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
   }
 }
 
@@ -20,6 +21,8 @@ def isNewArchitectureEnabled() {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlinx-serialization'
+
 
 if (isNewArchitectureEnabled()) {
   apply plugin: 'com.facebook.react'
@@ -138,6 +141,9 @@ dependencies {
   // Kotlin Coroutines
   implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
   implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+
+  implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0-RC'
+  //
 }
 
 if (isNewArchitectureEnabled()) {

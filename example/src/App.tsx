@@ -39,7 +39,6 @@ export default function App() {
 
   const AuthRequest = {
     challenge: 'T1xCsnxM2DNL2KdK5CLa6fMhD7OBqho6syzInk_n-Uo',
-    allowCredentials: [],
     timeout: 1800000,
     userVerification: 'required',
     rpId: 'mperhats.github.io',

@@ -19,6 +19,7 @@
 - [ ] Add support for credential recovery
 [If a user no longer has access to a device where they had stored their credentials, they might need to recover from a secure online backup. To learn more about how to support this credential recovery process, read the section titled "Recovering access or adding new devices" in this blog post: Security of Passkeys in the Google Password Manager.](https://developer.android.com/training/sign-in/passkeys#credential-recovery)
 
+- currently only sending rpId an challenge to the native iOS module
 
 
 
