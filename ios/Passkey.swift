@@ -76,26 +76,37 @@ class Passkey: NSObject {
     // Check if Passkeys are supported on this OS version
     if #available(iOS 15.0, *) {
         
+        print("challenge \(challenge)")
         // Convert challenge and userId to correct type
         guard let messageBuffer = challenge.data(using: .utf8) else {
             reject(PassKeyError.invalidChallenge.rawValue, PassKeyError.invalidChallenge.rawValue, nil);
             return
         }
         
-        // computes the SHA-256 hash of a given challenge string
+        //print statements to ensure valid stamp is sent to key provider. 
+        print("messageBuffer: \(messageBuffer)")
         let hash = SHA256.hash(data: messageBuffer)
+        
         let hashBuffer = [UInt8](hash)
+        print("hashBuffer: \(hashBuffer)")
+        
         let hexString = hashBuffer.map { String(format: "%02hhx", $0) }.joined()
+        print("hexString: \(hexString)")
+
         guard let hexData = hexString.data(using: .utf8) else {
             reject(PassKeyError.invalidChallenge.rawValue, PassKeyError.invalidChallenge.rawValue, nil);
             return
         }
+
         let hexBuffer = [UInt8](hexData)
+        print("hexBuffer: \(hexBuffer)")
+        
         let uInt8Array = [UInt8](hexBuffer)
+        print("uInt8Array: \(uInt8Array)")
         let challengeData = Data(uInt8Array)
         
-    
-      let authController: ASAuthorizationController;
+      
+        let authController: ASAuthorizationController;
 
       // Check if authentication should proceed with a security key
       if (securityKey) {

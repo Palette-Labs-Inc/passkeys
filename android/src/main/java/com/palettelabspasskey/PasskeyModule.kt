@@ -165,24 +165,34 @@ class PasskeyModule(reactContext: ReactApplicationContext) : ReactContextBaseJav
   private fun computeSHA256Hash(challenge: String): String? {
     try {
       // Convert the challenge string to bytes
-      val messageBytes = challenge.toByteArray(StandardCharsets.UTF_8)
+      val messageBuffer = challenge.toByteArray(StandardCharsets.UTF_8)
+      Log.d("sha","messageBuffer: $messageBuffer")
 
       // Compute the SHA-256 hash
       val digest = MessageDigest.getInstance("SHA-256")
-      val hashBytes = digest.digest(messageBytes)
+      val hashBuffer = digest.digest(messageBuffer)
+      Log.d("sha","hashBuffer: $hashBuffer")
 
-      val hexString = hashBytes.joinToString("") { "%02x".format(it) }
-      Log.e("hash",hexString)
+      val hexString = hashBuffer.joinToString("") { "%02x".format(it) }
 
-      // If needed, you can convert the hex string back to bytes or other types
+      Log.d("sha","hexString: $hexString")
+
       val hexData = hexString.toByteArray(StandardCharsets.UTF_8)
-      val uInt8Array = ByteArray(hexData.size) { hexData[it].toByte() }
-      val encodedString = Base64.getUrlEncoder().encodeToString(uInt8Array)
+      Log.d("sha","hexData: $hexData")
 
-      Log.e("hash",encodedString)
+      val hexBuffer = ByteArray(hexData.size) { hexData[it].toByte() }
+
+      val byteList = hexBuffer.toList()
+      val byteString = byteList.joinToString(", ") { it.toString() }
+      Log.d("sha", "hexBuffer: [$byteString]")
+
+      val encodedString = Base64.getUrlEncoder().encodeToString(hexBuffer)
+
+      Log.d("sha",encodedString)
       return  encodedString
 
     } catch (e: Exception) {
+      Log.e("sha","error: ${e.toString()}")
       // Handle any exceptions (e.g., invalid challenge)
       return null
     }
