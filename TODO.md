@@ -11,7 +11,9 @@
 - [ ] Android took two attempts on new device to successfully create the passkey.
 
 
-
+- [ ] Add android version dependency info to README
+- [ ] Need to catch errors in `authenticate` function when manipulating the challenge in android Kotlin code
+= [ ] Needs to fully encapsulate the webauthn standard
 
 - [ ] Determine transports in registration response.
 ["Make sure to save the transports value returned from @simplewebauthn/browser's startRegistration() method too. Advanced WebAuthn functionality like cross-device auth (i.e. authenticating into a website displayed in Chrome on Windows by using your iPhone) is hard to design good UX around. You can use the browser to figure out when it is available by including each credential's transports in the allowCredentials array passed later into generateAuthenticateOptions(). They will help the browser figure out when a credential might enable a user to log in using new technology that wasn't available before."](https://simplewebauthn.dev/docs/advanced/passkeys)
@@ -28,6 +30,7 @@
 - [ ] Add support for Turnkey and regular WebAuthN.
 - [ ] Add supoport for cross-platform auth
 - [ ] Add support for Account Abstraction
+- [ ] Add support for account recovery
 
 
 
