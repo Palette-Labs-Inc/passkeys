@@ -3,8 +3,8 @@ import {
   PasskeyRegistrationResult,
   PasskeyAuthenticationResult,
 } from './Passkey';
-import type { PasskeyError, PasskeyErrorCode } from './PasskeyError';
-
+import type { PasskeyError } from './PasskeyError';
+import { PasskeyErrorCode } from './PasskeyError';
 export {
   Passkey,
   PasskeyErrorCode,
