@@ -1,10 +1,4 @@
-export interface PasskeyError {
-  error: string;
-  message: string;
-  code: PasskeyErrorCode;
-}
-
-export declare enum PasskeyErrorCode {
+export enum PasskeyErrorCode {
   UnknownError = 'UnknownError',
   NotSupported = 'NotSupported',
   RequestFailed = 'RequestFailed',
@@ -14,6 +8,12 @@ export declare enum PasskeyErrorCode {
   NotConfigured = 'NotConfigured',
   NoCredentials = 'NoCredentials',
   Interrupted = 'Interrupted',
+}
+
+export interface PasskeyError {
+  error: string;
+  message: string;
+  code: PasskeyErrorCode;
 }
 
 export const UnknownError: PasskeyError = {

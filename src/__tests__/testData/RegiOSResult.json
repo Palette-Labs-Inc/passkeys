@@ -1,7 +1,14 @@
 {
-  "credentialID": "wOcpYYrgQyCo7iy9q5IYodwSappmCy-CaXuV7hhKxtQdAAAAAA",
-  "response": {
-    "rawAttestationObject": "",
-    "rawClientDataJSON": ""
+  "result": {
+    "credentialID": "wOcpYYrgQyCo7iy9q5IYodwSappmCy-CaXuV7hhKxtQdAAAAAA",
+    "response": {
+      "rawAttestationObject": "",
+      "rawClientDataJSON": ""
+    }
+  },
+  "error": {
+    "error": "Unknown error",
+    "message": "An unknown error occurred",
+    "code": "UnknownError"
   }
 }

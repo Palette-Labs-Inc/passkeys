@@ -9,8 +9,7 @@ export class Passkey {
    *
    * @param request The FIDO2 Attestation Request in JSON format
    * @param options An object containing options for the registration process
-   * @returns The FIDO2 Attestation Result in JSON format
-   * @throws
+   * @returns The FIDO2 Attestation Result in JSON format or a PasskeyError
    */
   public static async register(
     request: PasskeyRegistrationRequest,
@@ -36,8 +35,7 @@ export class Passkey {
    *
    * @param request The FIDO2 Assertion Request in JSON format
    * @param options An object containing options for the authentication process
-   * @returns The FIDO2 Assertion Result in JSON format
-   * @throws
+   * @returns The FIDO2 Assertion Result in JSON format or a PasskeyError
    */
   public static async authenticate(
     request: PasskeyAuthenticationRequest,
@@ -49,7 +47,7 @@ export class Passkey {
     result: PasskeyAuthenticationResult | undefined;
   }> {
     if (!Passkey.isSupported) {
-      throw NotSupportedError;
+      return { error: NotSupportedError, result: undefined };
     }
 
     if (Platform.OS === 'android') {
