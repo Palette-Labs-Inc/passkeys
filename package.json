@@ -1,6 +1,6 @@
 {
   "name": "@palette-labs/passkey",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Passkey implementation for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
