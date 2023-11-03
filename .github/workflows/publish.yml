@@ -16,15 +16,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18
-          registry-url: 'https://registry.npmjs.org/'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: yarn
-
-      - name: Authenticate npm
-        run: npm adduser
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        
+      - name: Build
+        run: yarn prepare
 
       - name: Publish to npm
         env:
