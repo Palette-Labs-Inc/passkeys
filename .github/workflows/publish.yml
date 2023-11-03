@@ -9,9 +9,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: version bump
-        run: npm version patch
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -20,7 +17,10 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
-
+          
+      - name: version bump
+        run: npm version patch
+        
       - name: Install dependencies
         run: yarn
         
