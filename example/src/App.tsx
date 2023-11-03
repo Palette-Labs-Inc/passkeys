@@ -61,18 +61,16 @@ export default function App() {
   }
 
   async function authenticateAccount() {
-    try {
-      const requestJson = {
-        // ...Retrieve request from server
-        ...AuthRequest,
-      };
+    const requestJson = {
+      // ...Retrieve request from server
+      ...AuthRequest,
+    };
 
-      const result = await Passkey.authenticate(requestJson);
-
-      console.log('Authentication result: ', result);
-    } catch (e) {
-      console.log(e);
+    const { error, result } = await Passkey.authenticate(requestJson);
+    if (error?.code !== PasskeyErrorCode.UserCancelled) {
+      console.log(error);
     }
+    console.log('Authentication result: ', result);
   }
 
   async function createAccountWithSecurityKey() {
@@ -93,20 +91,19 @@ export default function App() {
   }
 
   async function authenticateAccountWithSecurityKey() {
-    try {
-      const requestJson = {
-        // ...Retrieve request from server
-        ...AuthRequest,
-      };
+    const requestJson = {
+      // ...Retrieve request from server
+      ...AuthRequest,
+    };
 
-      const result = await Passkey.authenticate(requestJson, {
-        withSecurityKey: true,
-      });
-
-      console.log('Authentication result: ', result);
-    } catch (e) {
-      console.log(e);
+    const { error, result } = await Passkey.authenticate(requestJson, {
+      withSecurityKey: true,
+    });
+    if (error?.code !== PasskeyErrorCode.UserCancelled) {
+      console.log(error);
     }
+
+    console.log('Authentication result: ', result);
   }
 
   async function isSupported() {
