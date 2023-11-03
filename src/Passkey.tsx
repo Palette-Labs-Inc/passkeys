@@ -1,4 +1,4 @@
-import { NotSupportedError } from './PasskeyError';
+import { NotSupportedError, PasskeyError } from './PasskeyError';
 import { Platform } from 'react-native';
 import { PasskeyAndroid } from './PasskeyAndroid';
 import { PasskeyiOS } from './PasskeyiOS';
@@ -9,17 +9,19 @@ export class Passkey {
    *
    * @param request The FIDO2 Attestation Request in JSON format
    * @param options An object containing options for the registration process
-   * @returns The FIDO2 Attestation Result in JSON format
-   * @throws
+   * @returns The FIDO2 Attestation Result in JSON format or a PasskeyError
    */
   public static async register(
     request: PasskeyRegistrationRequest,
     { withSecurityKey }: { withSecurityKey: boolean } = {
       withSecurityKey: false,
     }
-  ): Promise<PasskeyRegistrationResult> {
+  ): Promise<{
+    error: PasskeyError | undefined;
+    result: PasskeyRegistrationResult | undefined;
+  }> {
     if (!Passkey.isSupported) {
-      throw NotSupportedError;
+      return { error: NotSupportedError, result: undefined };
     }
 
     if (Platform.OS === 'android') {
@@ -33,17 +35,19 @@ export class Passkey {
    *
    * @param request The FIDO2 Assertion Request in JSON format
    * @param options An object containing options for the authentication process
-   * @returns The FIDO2 Assertion Result in JSON format
-   * @throws
+   * @returns The FIDO2 Assertion Result in JSON format or a PasskeyError
    */
   public static async authenticate(
     request: PasskeyAuthenticationRequest,
     { withSecurityKey }: { withSecurityKey: boolean } = {
       withSecurityKey: false,
     }
-  ): Promise<PasskeyAuthenticationResult> {
+  ): Promise<{
+    error: PasskeyError | undefined;
+    result: PasskeyAuthenticationResult | undefined;
+  }> {
     if (!Passkey.isSupported) {
-      throw NotSupportedError;
+      return { error: NotSupportedError, result: undefined };
     }
 
     if (Platform.OS === 'android') {

@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { StyleSheet, View, Button, TextInput, Alert } from 'react-native';
 import { Passkey } from '@palette-labs/passkey';
+import { PasskeyErrorCode } from 'src/PasskeyError';
 
 //import RegRequest from '../../src/__tests__/testData/RegRequest.json';
 //import AuthRequest from '../../src/__tests__/testData/AuthRequest.json';
@@ -45,67 +46,64 @@ export default function App() {
   };
 
   async function createAccount() {
-    try {
-      const requestJson = {
-        // ...Retrieve request from server
-        ...RegRequest,
-      };
+    const requestJson = {
+      // ...Retrieve request from server
+      ...RegRequest,
+    };
 
-      const result = await Passkey.register(requestJson);
+    const { error, result } = await Passkey.register(requestJson);
 
-      console.log('Registration result: ', result);
-    } catch (e) {
-      console.log(e);
+    if (error?.code !== PasskeyErrorCode.UserCancelled) {
+      console.log(error);
     }
+
+    console.log('Registration result: ', result);
   }
 
   async function authenticateAccount() {
-    try {
-      const requestJson = {
-        // ...Retrieve request from server
-        ...AuthRequest,
-      };
+    const requestJson = {
+      // ...Retrieve request from server
+      ...AuthRequest,
+    };
 
-      const result = await Passkey.authenticate(requestJson);
-
-      console.log('Authentication result: ', result);
-    } catch (e) {
-      console.log(e);
+    const { error, result } = await Passkey.authenticate(requestJson);
+    if (error?.code !== PasskeyErrorCode.UserCancelled) {
+      console.log(error);
     }
+    console.log('Authentication result: ', result);
   }
 
   async function createAccountWithSecurityKey() {
-    try {
-      const requestJson = {
-        // ...Retrieve request from server
-        ...RegRequest,
-      };
+    const requestJson = {
+      // ...Retrieve request from server
+      ...RegRequest,
+    };
 
-      const result = await Passkey.register(requestJson, {
-        withSecurityKey: true,
-      });
+    const { error, result } = await Passkey.register(requestJson, {
+      withSecurityKey: true,
+    });
 
-      console.log('Registration result: ', result);
-    } catch (e) {
-      console.log(e);
+    if (error?.code !== PasskeyErrorCode.UserCancelled) {
+      console.log(error);
     }
+
+    console.log('Registration result: ', result);
   }
 
   async function authenticateAccountWithSecurityKey() {
-    try {
-      const requestJson = {
-        // ...Retrieve request from server
-        ...AuthRequest,
-      };
+    const requestJson = {
+      // ...Retrieve request from server
+      ...AuthRequest,
+    };
 
-      const result = await Passkey.authenticate(requestJson, {
-        withSecurityKey: true,
-      });
-
-      console.log('Authentication result: ', result);
-    } catch (e) {
-      console.log(e);
+    const { error, result } = await Passkey.authenticate(requestJson, {
+      withSecurityKey: true,
+    });
+    if (error?.code !== PasskeyErrorCode.UserCancelled) {
+      console.log(error);
     }
+
+    console.log('Authentication result: ', result);
   }
 
   async function isSupported() {

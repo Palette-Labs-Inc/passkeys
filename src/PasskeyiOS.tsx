@@ -4,7 +4,7 @@ import type {
   PasskeyAuthenticationRequest,
   PasskeyAuthenticationResult,
 } from './Passkey';
-import { handleNativeError } from './PasskeyError';
+import { PasskeyError, handleNativeError } from './PasskeyError';
 import { NativePasskey } from './NativePasskey';
 
 export class PasskeyiOS {
@@ -18,11 +18,13 @@ export class PasskeyiOS {
   public static async register(
     request: PasskeyRegistrationRequest,
     withSecurityKey = false
-  ): Promise<PasskeyRegistrationResult> {
+  ): Promise<{
+    error: PasskeyError | undefined;
+    result: PasskeyRegistrationResult | undefined;
+  }> {
     // Extract the required data from the attestation request
     const { rpId, challenge, name, userID } =
       this.prepareRegistrationRequest(request);
-
     try {
       const response = await NativePasskey.register(
         rpId,
@@ -31,9 +33,11 @@ export class PasskeyiOS {
         userID,
         withSecurityKey
       );
-      return this.handleNativeRegistrationResult(response);
+      const result = this.handleNativeRegistrationResult(response);
+      return { result, error: undefined };
     } catch (error) {
-      throw handleNativeError(error);
+      const passkeyError = handleNativeError(error);
+      return { error: passkeyError, result: undefined };
     }
   }
 
@@ -77,16 +81,21 @@ export class PasskeyiOS {
   public static async authenticate(
     request: PasskeyAuthenticationRequest,
     withSecurityKey = false
-  ): Promise<PasskeyAuthenticationResult> {
+  ): Promise<{
+    error: PasskeyError | undefined;
+    result: PasskeyAuthenticationResult | undefined;
+  }> {
     try {
       const response = await NativePasskey.authenticate(
         request.rpId,
         request.challenge,
         withSecurityKey
       );
-      return this.handleNativeAuthenticationResult(response);
+      const result = this.handleNativeAuthenticationResult(response);
+      return { result, error: undefined };
     } catch (error) {
-      throw handleNativeError(error);
+      const passkeyError = handleNativeError(error);
+      return { error: passkeyError, result: undefined };
     }
   }
 

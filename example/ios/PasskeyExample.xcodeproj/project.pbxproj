@@ -501,7 +501,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palettelabs.wallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.palettelabs.nosh;
 				PRODUCT_NAME = PasskeyExample;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -528,7 +528,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.palettelabs.wallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.palettelabs.nosh;
 				PRODUCT_NAME = PasskeyExample;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

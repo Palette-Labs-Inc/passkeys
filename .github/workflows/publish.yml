@@ -9,6 +9,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: version bump
+        run: npm version patch
+
       - name: Checkout
         uses: actions/checkout@v2
 
