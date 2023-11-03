@@ -4,7 +4,7 @@ import type {
   PasskeyRegistrationRequest,
   PasskeyAuthenticationRequest,
 } from './Passkey';
-import { handleNativeError } from './PasskeyError';
+import { PasskeyError, handleNativeError } from './PasskeyError';
 import { NativePasskey } from './NativePasskey';
 
 export class PasskeyAndroid {
@@ -14,18 +14,21 @@ export class PasskeyAndroid {
    * @param request The FIDO2 Attestation Request in JSON format
    * @returns The FIDO2 Attestation Result in JSON format
    */
-  public static async register(
-    request: PasskeyRegistrationRequest
-  ): Promise<PasskeyRegistrationResult> {
+  public static async register(request: PasskeyRegistrationRequest): Promise<{
+    error: PasskeyError | undefined;
+    result: PasskeyRegistrationResult | undefined;
+  }> {
     const nativeRequest = this.prepareRequest(request);
 
     try {
       const response = await NativePasskey.register(
         JSON.stringify(nativeRequest)
       );
-      return this.handleNativeResponse(JSON.parse(response));
+      const result = this.handleNativeResponse(response);
+      return { result, error: undefined };
     } catch (error) {
-      throw handleNativeError(error);
+      const passkeyError = handleNativeError(error);
+      return { error: passkeyError, result: undefined };
     }
   }
 
@@ -37,16 +40,20 @@ export class PasskeyAndroid {
    */
   public static async authenticate(
     request: PasskeyAuthenticationRequest
-  ): Promise<PasskeyAuthenticationResult> {
+  ): Promise<{
+    error: PasskeyError | undefined;
+    result: PasskeyAuthenticationResult | undefined;
+  }> {
     const nativeRequest = this.prepareRequest(request);
-
     try {
       const response = await NativePasskey.authenticate(
         JSON.stringify(nativeRequest)
       );
-      return this.handleNativeResponse(JSON.parse(response));
+      const result = this.handleNativeResponse(response);
+      return { result, error: undefined };
     } catch (error) {
-      throw handleNativeError(error);
+      const passkeyError = handleNativeError(error);
+      return { error: passkeyError, result: undefined };
     }
   }
 
