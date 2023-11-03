@@ -1,4 +1,4 @@
-import { NotSupportedError } from './PasskeyError';
+import { NotSupportedError, PasskeyError } from './PasskeyError';
 import { Platform } from 'react-native';
 import { PasskeyAndroid } from './PasskeyAndroid';
 import { PasskeyiOS } from './PasskeyiOS';
@@ -17,9 +17,12 @@ export class Passkey {
     { withSecurityKey }: { withSecurityKey: boolean } = {
       withSecurityKey: false,
     }
-  ): Promise<PasskeyRegistrationResult> {
+  ): Promise<{
+    error: PasskeyError | undefined;
+    result: PasskeyRegistrationResult | undefined;
+  }> {
     if (!Passkey.isSupported) {
-      throw NotSupportedError;
+      return { error: NotSupportedError, result: undefined };
     }
 
     if (Platform.OS === 'android') {
@@ -41,7 +44,10 @@ export class Passkey {
     { withSecurityKey }: { withSecurityKey: boolean } = {
       withSecurityKey: false,
     }
-  ): Promise<PasskeyAuthenticationResult> {
+  ): Promise<{
+    error: PasskeyError | undefined;
+    result: PasskeyAuthenticationResult | undefined;
+  }> {
     if (!Passkey.isSupported) {
       throw NotSupportedError;
     }
